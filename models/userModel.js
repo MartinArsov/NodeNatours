@@ -15,7 +15,10 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: 'default.jpeg',
+  },
   role: {
     type: String,
     enum: ['user', 'guide', 'leade-guide', 'admin'],
@@ -48,6 +51,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+//Encription password
 userSchema.pre('save', async function (next) {
   //Only run if password was modified
   if (!this.isModified('password')) return next();
